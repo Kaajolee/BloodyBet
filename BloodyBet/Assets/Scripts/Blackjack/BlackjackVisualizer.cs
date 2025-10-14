@@ -15,13 +15,15 @@ public class BlackjackVisualizer : MonoBehaviour
 
     [SerializeField] private Button hitButton;
     [SerializeField] private Button standButton;
+    [SerializeField] private Button startButton;
 
     [SerializeField] private TextMeshProUGUI outputText;
 
+    [SerializeField] private GameObject startUi;
+    [SerializeField] private GameObject gameUi;
+
     private BlackjackStage currentStage = BlackjackStage.Betting;
     private bool playerInputReceived = false;
-    private bool playerBusted = false;
-    private bool dealerBusted = false;
 
     void OnEnable()
     {
@@ -39,9 +41,18 @@ public class BlackjackVisualizer : MonoBehaviour
     {
         hitButton.onClick.AddListener(HitPlayer);
         standButton.onClick.AddListener(StandPlayer);
+        startButton.onClick.AddListener(StartGame);
 
         hitButton.interactable = false;
         standButton.interactable = false;
+
+        gameUi.SetActive(false);
+    }
+
+    private void StartGame()
+    {
+        startUi.SetActive(false);
+        gameUi.SetActive(true);
 
         StartCoroutine(GameFlowRoutine());
     }
@@ -76,7 +87,6 @@ public class BlackjackVisualizer : MonoBehaviour
         outputText.text = "Stage: Initial Deal";
 
         blackjackLogic.StartGame();
-
 
 
         blackjackLogic.DealCard(blackjackLogic.DealerHands.First());
@@ -164,38 +174,22 @@ public class BlackjackVisualizer : MonoBehaviour
         currentStage = BlackjackStage.HandEvaluation;
         Debug.Log("Stage: Evaluate Hands");
 
-        var playerTotal = blackjackLogic.EvaluateHand(blackjackLogic.PlayerHands.First());
-        var dealerTotal = blackjackLogic.EvaluateHand(blackjackLogic.DealerHands.First());
+        RoundInfo roundResult = blackjackLogic.EvaluateRound();
 
-        if (playerBusted && dealerBusted)
+        switch (roundResult.Outcome)
         {
-            Debug.Log($"Push: {playerTotal} vs {dealerTotal}");
-            outputText.text = $"Push: {playerTotal} vs {dealerTotal}";
-        }
-        else if (playerBusted)
-        {
-            Debug.Log($"Dealer won: {dealerTotal} vs {playerTotal}");
-            outputText.text = $"Dealer won: {dealerTotal} vs {playerTotal}";
-        }
-        else if (dealerBusted)
-        {
-            Debug.Log($"Player won: {playerTotal} vs {dealerTotal}");
-            outputText.text = $"Player won: {playerTotal} vs {dealerTotal}";
-        }
-        else if (playerTotal > dealerTotal)
-        {
-            Debug.Log($"Player won: {playerTotal} vs {dealerTotal}");
-            outputText.text = $"Player won: {playerTotal} vs {dealerTotal}";
-        }
-        else if (playerTotal < dealerTotal)
-        {
-            Debug.Log($"Dealer won: {dealerTotal} vs {playerTotal}");
-            outputText.text = $"Dealer won: {dealerTotal} vs {playerTotal}";
-        }
-        else // playerTotal == dealerTotal
-        {
-            Debug.Log($"Push: {playerTotal} vs {dealerTotal}");
-            outputText.text = $"Push: {playerTotal} vs {dealerTotal}";
+            case RoundOutcome.PlayerWin:
+                Debug.Log($"Player won: {roundResult.PlayerScore} vs {roundResult.DealerScore}");
+                outputText.text = $"Player won: {roundResult.PlayerScore} vs {roundResult.DealerScore}";
+                break;
+            case RoundOutcome.DealerWin:
+                Debug.Log($"Dealer won: {roundResult.DealerScore} vs {roundResult.PlayerScore}");
+                outputText.text = $"Dealer won: {roundResult.DealerScore} vs {roundResult.PlayerScore}";
+                break;
+            case RoundOutcome.Push:
+                Debug.Log($"Push: {roundResult.PlayerScore} vs {roundResult.DealerScore}");
+                outputText.text = $"Push: {roundResult.PlayerScore} vs {roundResult.DealerScore}";
+                break;
         }
 
         yield return new WaitForSeconds(2f);
@@ -228,15 +222,11 @@ public class BlackjackVisualizer : MonoBehaviour
     {
         Debug.Log("Visualizer: Player bust detected!");
         playerInputReceived = true;
-        //playerLayout.ClearCards();
-        playerBusted = true;
     }
 
     private void HandleDealerBust()
     {
         Debug.Log("Visualizer: Dealer bust detected!");
-        //dealerLayout.ClearCards();
-        dealerBusted = true;
     }
 
     private void HandleRoundReset()
@@ -244,8 +234,6 @@ public class BlackjackVisualizer : MonoBehaviour
         Debug.Log("Visualizer: Resetting table visuals...");
         playerLayout.ClearCards();
         dealerLayout.ClearCards();
-        playerBusted = false;
-        dealerBusted = false;
     }
 
     void HitPlayer()

@@ -20,6 +20,9 @@ public class BlackjackLogic : MonoBehaviour
 
     private static System.Random rng = new System.Random();
 
+    private bool playerBusted = false;
+    private bool dealerBusted = false;
+
     void Start()
     {
 
@@ -37,6 +40,9 @@ public class BlackjackLogic : MonoBehaviour
 
         PlayerHands.Clear();
         DealerHands.Clear();
+
+        playerBusted = false;
+        dealerBusted = false;
 
         PlayerHands.Add(new BlackjackHand());
         DealerHands.Add(new BlackjackHand());
@@ -75,11 +81,13 @@ public class BlackjackLogic : MonoBehaviour
         if (hand == PlayerHands.First() && total > 21)
         {
             Debug.Log("Player busts!");
+            playerBusted = true;
             OnPlayerBust?.Invoke();
         }
         else if (hand == DealerHands.First() && total > 21)
         {
             Debug.Log("Dealer busts!");
+            dealerBusted = true;
             OnDealerBust?.Invoke();
         }
     }
@@ -96,12 +104,71 @@ public class BlackjackLogic : MonoBehaviour
             {
                 sum += 10;
             }
-            else if (value <= 10)
+            else if (value <= 10 && value != 1)
             {
                 sum += value;
+            }
+            else if (value == 1) //ace
+            {
+                if (sum + value > 21)
+                    sum += value;
+                else
+                    sum += 11;
             }
         }
 
         return sum;
     }
+
+    public RoundInfo EvaluateRound()
+    {
+        var playerTotal = EvaluateHand(PlayerHands.First());
+        var dealerTotal = EvaluateHand(DealerHands.First());
+
+        if (playerBusted && dealerBusted)
+        {
+            return new RoundInfo(RoundOutcome.Push, playerTotal, dealerTotal);
+        }
+        else if (playerBusted)
+        {
+            return new RoundInfo(RoundOutcome.DealerWin, playerTotal, dealerTotal);
+        }
+        else if (dealerBusted)
+        {
+            return new RoundInfo(RoundOutcome.PlayerWin, playerTotal, dealerTotal);
+        }
+        else if (playerTotal > dealerTotal)
+        {
+            return new RoundInfo(RoundOutcome.PlayerWin, playerTotal, dealerTotal);
+        }
+        else if (playerTotal < dealerTotal)
+        {
+            return new RoundInfo(RoundOutcome.DealerWin, playerTotal, dealerTotal);
+        }
+        else // playerTotal == dealerTotal
+        {
+            return new RoundInfo(RoundOutcome.Push, playerTotal, dealerTotal);
+        }
+    }
+}
+
+public struct RoundInfo
+{
+    public RoundInfo(RoundOutcome outcome, int playerScore, int dealerScore)
+    {
+        Outcome = outcome;
+        PlayerScore = playerScore;
+        DealerScore = dealerScore;
+    }
+
+    public RoundOutcome Outcome { get; private set; }
+    public int PlayerScore {  get; private set; }
+    public int DealerScore { get; private set; }
+}
+
+public enum RoundOutcome
+{
+    PlayerWin,
+    DealerWin,
+    Push,
 }
