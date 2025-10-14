@@ -44,8 +44,12 @@ public class Horizontal3DLayout : MonoBehaviour
 
         for (int i = 0; i < cards.Count; i++)
         {
-            Vector3 targetPos = new Vector3(startX + i * spacing, 0f, 0f);
-            targetPositions.Add(targetPos);
+            // Local offset in layout space
+            Vector3 localOffset = new Vector3(startX + i * spacing, 0f, 0f);
+
+            // Convert that offset to world space
+            Vector3 worldTarget = transform.TransformPoint(localOffset);
+            targetPositions.Add(worldTarget);
         }
     }
 
@@ -70,13 +74,13 @@ public class Horizontal3DLayout : MonoBehaviour
             if (i >= targetPositions.Count) continue;
 
             // Smoothly move toward target position
-            cards[i].localPosition = Vector3.Lerp(
-                cards[i].localPosition,
+            cards[i].position = Vector3.Lerp(
+                cards[i].position,
                 targetPositions[i],
                 speed * Time.deltaTime
             );
 
-            if (Vector3.Distance(cards[i].localPosition, targetPositions[i]) > 0.55f)
+            if (Vector3.Distance(cards[i].position, targetPositions[i]) > 0.55f)
                 allAtDeck = false;
         }
 
