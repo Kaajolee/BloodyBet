@@ -52,7 +52,7 @@ public class BlackjackVisualizer : MonoBehaviour
     private void StartGame()
     {
         startUi.SetActive(false);
-        gameUi.SetActive(true);
+        //gameUi.SetActive(true);
 
         StartCoroutine(GameFlowRoutine());
     }
@@ -236,7 +236,7 @@ public class BlackjackVisualizer : MonoBehaviour
         dealerLayout.ClearCards();
     }
 
-    void HitPlayer()
+    public void HitPlayer()
     {
         if (currentStage == BlackjackStage.PlayerTurn && !playerInputReceived)
         {
@@ -254,12 +254,17 @@ public class BlackjackVisualizer : MonoBehaviour
         }
     }
 
-    void StandPlayer()
+    public void StandPlayer()
     {
         if (currentStage == BlackjackStage.PlayerTurn && !playerInputReceived)
         {
             playerInputReceived = true;
         }
+    }
+
+    public BlackjackStage GetCurrentStage()
+    {
+        return currentStage;
     }
 }
 
