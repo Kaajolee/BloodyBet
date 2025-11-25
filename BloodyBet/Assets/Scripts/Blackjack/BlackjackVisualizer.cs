@@ -120,6 +120,8 @@ public class BlackjackVisualizer : MonoBehaviour
         Debug.Log("Stage: Player Turn");
         outputText.text = "Stage: Player Turn";
 
+        gameUi.SetActive(true);
+
         hitButton.interactable = true;
         standButton.interactable = true;
 
@@ -149,8 +151,8 @@ public class BlackjackVisualizer : MonoBehaviour
         float elapsed = 0f;
 
         // Define start and end rotations
-        Quaternion startRotation = Quaternion.Euler(90, 0, 0); // Face Down
-        Quaternion endRotation = Quaternion.Euler(-270f, 0, 0);      // Face Up
+        Quaternion startRotation = Quaternion.Euler(180, 0, 0); // Face Down
+        Quaternion endRotation = Quaternion.Euler(0, 0, 0);      // Face Up
 
         while (elapsed < duration)
         {
