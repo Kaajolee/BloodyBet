@@ -9,6 +9,11 @@ public class BlackjackVisualizer : MonoBehaviour
     [SerializeField]
     private BlackjackLogic blackjackLogic;
 
+    [SerializeField] private GameObject playerManager;
+    private CurrencyManager currencyManager;
+
+    private int currentBet = 0;
+
     [SerializeField] private Horizontal3DLayout playerLayout;
     [SerializeField] private Horizontal3DLayout dealerLayout;
     [SerializeField] private GameObject cardPrefab;
@@ -46,13 +51,15 @@ public class BlackjackVisualizer : MonoBehaviour
         hitButton.interactable = false;
         standButton.interactable = false;
 
+        currencyManager = playerManager.GetComponent<CurrencyManager>();
+
         gameUi.SetActive(false);
     }
 
     private void StartGame()
     {
         startUi.SetActive(false);
-        gameUi.SetActive(true);
+        //gameUi.SetActive(true);
 
         StartCoroutine(GameFlowRoutine());
     }
@@ -77,7 +84,10 @@ public class BlackjackVisualizer : MonoBehaviour
         currentStage = BlackjackStage.Betting;
         Debug.Log("Stage: Betting");
         outputText.text = "Stage: Betting";
-        yield return new WaitForSeconds(1f);
+
+        currentBet = currencyManager.currentBet;
+
+        yield return new WaitForSeconds(2f);
     }
 
     private IEnumerator InitialDealPhase()
@@ -181,10 +191,12 @@ public class BlackjackVisualizer : MonoBehaviour
             case RoundOutcome.PlayerWin:
                 Debug.Log($"Player won: {roundResult.PlayerScore} vs {roundResult.DealerScore}");
                 outputText.text = $"Player won: {roundResult.PlayerScore} vs {roundResult.DealerScore}";
+                currencyManager.AddMoney(currentBet);
                 break;
             case RoundOutcome.DealerWin:
                 Debug.Log($"Dealer won: {roundResult.DealerScore} vs {roundResult.PlayerScore}");
                 outputText.text = $"Dealer won: {roundResult.DealerScore} vs {roundResult.PlayerScore}";
+                currencyManager.RemoveMoney(currentBet);
                 break;
             case RoundOutcome.Push:
                 Debug.Log($"Push: {roundResult.PlayerScore} vs {roundResult.DealerScore}");
@@ -236,7 +248,7 @@ public class BlackjackVisualizer : MonoBehaviour
         dealerLayout.ClearCards();
     }
 
-    void HitPlayer()
+    public void HitPlayer()
     {
         if (currentStage == BlackjackStage.PlayerTurn && !playerInputReceived)
         {
@@ -254,12 +266,17 @@ public class BlackjackVisualizer : MonoBehaviour
         }
     }
 
-    void StandPlayer()
+    public void StandPlayer()
     {
         if (currentStage == BlackjackStage.PlayerTurn && !playerInputReceived)
         {
             playerInputReceived = true;
         }
+    }
+
+    public BlackjackStage GetCurrentStage()
+    {
+        return currentStage;
     }
 }
 
