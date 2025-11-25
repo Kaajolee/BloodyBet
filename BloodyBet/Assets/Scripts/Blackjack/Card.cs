@@ -6,15 +6,14 @@ public class Card
 
     public Rank Rank { get; set; }
 
-    public Card(Suit suit, Rank rank)
+    public Card(Rank rank)
     {
-        Suit = suit;
         Rank = rank;
     }
 
     public override string ToString()
     {
-        return $"{Rank} of {Suit}";
+        return $"{Rank}";
     }
 }
 
