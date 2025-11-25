@@ -149,7 +149,7 @@ public class BlackjackVisualizer : MonoBehaviour
         float elapsed = 0f;
 
         // Define start and end rotations
-        Quaternion startRotation = Quaternion.Euler(0, 0, 0); // Face Down
+        Quaternion startRotation = Quaternion.Euler(90, 0, 0); // Face Down
         Quaternion endRotation = Quaternion.Euler(-270f, 0, 0);      // Face Up
 
         while (elapsed < duration)
@@ -221,11 +221,13 @@ public class BlackjackVisualizer : MonoBehaviour
     private void SpawnVisualCard(Horizontal3DLayout layout, Card cardData, bool flipped)
     {
         GameObject cardObj = Instantiate(cardPrefab, layout.transform);
-        cardObj.GetComponentInChildren<TextMeshProUGUI>().text = cardData.ToString();
+
+        cardObj.GetComponent<CardSelector>().SetCard(cardData.Rank);
+        //cardObj.GetComponentInChildren<TextMeshProUGUI>().text = cardData.ToString();
 
         if (flipped)
         {
-            cardObj.transform.localRotation = Quaternion.Euler(270f, 0, 0);
+            cardObj.transform.localRotation = Quaternion.Euler(180f, 0, 0);
         }
 
         layout.AddCardInstance(cardObj);
