@@ -4,72 +4,59 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
-[RequireComponent(typeof(Collider))]
 public class Lever : MonoBehaviour {
-    [Header("Slot Machine Reference")]
+
+    private HingeJoint hinge;
+
     [SerializeField] private SlotMachine slotMachine;
 
-    [Header("Lever Animation")]
-    [SerializeField] private float pullAngle = 30f;       // kiek laipsnių lenkiasi rankena žemyn
-    [SerializeField] private float returnDuration = 0.4f; // animacijos greitis
-
-    [Header("Grab Settings")]
-    [SerializeField] private bool allowGrabRotation = true; // ar ranka gali sukti rankeną
-
-    [Header("Threshold")]
-    [SerializeField] private float pullThresholdDegrees = 20f; // laipsniai, per kuriuos spin paleidžiamas
-
-    private Quaternion startRotation;
-    private bool pulled = false;
-    private XRGrabInteractable grab;
+    [SerializeField] private float leverOutput = 100;
+    [SerializeField] private float minValue;
+    [SerializeField] private float maxValue;
+    [SerializeField] private float startingValue;
 
     void Start() {
-        startRotation = transform.localRotation;
+        hinge = GetComponent<HingeJoint>();
 
-        grab = GetComponent<XRGrabInteractable>();
-        grab.trackPosition = false;             // objekto pozicija lieka vietoje
-        grab.trackRotation = allowGrabRotation; // ranka gali pasukti rankeną
-        grab.throwOnDetach = false;             // kad nebūtų klaidų su kinematic Rigidbody
+        if (startingValue >= minValue && startingValue <= maxValue) {
+            float rangeFraction = (startingValue - minValue) / (maxValue - minValue);
+            float degreeRotation = hinge.limits.min + (hinge.limits.max - hinge.limits.min) * rangeFraction;
+            Vector3 worldSpaceHingeAxis = transform.TransformDirection(hinge.axis);
+            transform.rotation = Quaternion.AngleAxis(degreeRotation, worldSpaceHingeAxis) * transform.rotation;
+        }
     }
 
     void Update() {
-        if (!pulled) {
-            // patikriname, kiek rankena pasukta nuo startRotation
-            float angle = Quaternion.Angle(startRotation, transform.localRotation);
-            if (angle >= pullThresholdDegrees) {
-                pulled = true;
-                StartCoroutine(PlayLeverAndTrigger());
+        float leverValue = (hinge.angle - hinge.limits.min) / (hinge.limits.max - hinge.limits.min);
+        leverOutput = minValue + (maxValue - minValue) * leverValue;
+
+        StartMachine();
+    }
+
+    private void ResetLeverRotation() {
+        if (startingValue <= maxValue) {
+            float rangeFraction = (startingValue - minValue) / (maxValue - minValue);
+            float degreeRotation = hinge.limits.min + (hinge.limits.max - hinge.limits.min) * rangeFraction;
+            Vector3 worldSpaceHingeAxis = transform.TransformDirection(hinge.axis);
+            transform.rotation = Quaternion.AngleAxis(degreeRotation, worldSpaceHingeAxis);
+        }
+    }
+
+    private void StartMachine() {
+        if (leverOutput <= 10) {
+            if (slotMachine != null) {
+                slotMachine.StartSpin();
+
+                StartCoroutine(ReturnLever());
             }
         }
     }
 
-    private IEnumerator PlayLeverAndTrigger() {
-        // užtikriname, kad rankena nenukryptų
-        Quaternion targetRotation = startRotation * Quaternion.Euler(-pullAngle, 0f, 0f);
+    private IEnumerator ReturnLever() {
+        yield return new WaitForSeconds(0.5f);
 
-        // Animacija žemyn (jeigu norisi pabrėžti lenkimą)
-        float elapsed = 0f;
-        while (elapsed < returnDuration) {
-            elapsed += Time.deltaTime;
-            float t = Mathf.SmoothStep(0f, 1f, elapsed / returnDuration);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, t);
-            yield return null;
-        }
+        ResetLeverRotation();
 
-        // Paleidžiame slot machine
-        if (slotMachine != null)
-            slotMachine.StartSpin();
-
-        // Animacija atgal į startRotation
-        elapsed = 0f;
-        while (elapsed < returnDuration) {
-            elapsed += Time.deltaTime;
-            float t = Mathf.SmoothStep(0f, 1f, elapsed / returnDuration);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, startRotation, t);
-            yield return null;
-        }
-
-        transform.localRotation = startRotation;
-        pulled = false;
+        yield return new WaitForSeconds(0.5f);
     }
 }
