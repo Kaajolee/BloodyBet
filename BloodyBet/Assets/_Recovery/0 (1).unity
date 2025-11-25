@@ -15599,34 +15599,6 @@ PrefabInstance:
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7081840892515873890, guid: 41d89b59fe3e9964a83686ff24b7d0c5, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7081840892515873890, guid: 41d89b59fe3e9964a83686ff24b7d0c5, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7081840892515873890, guid: 41d89b59fe3e9964a83686ff24b7d0c5, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 3336338}
-    - target: {fileID: 7081840892515873890, guid: 41d89b59fe3e9964a83686ff24b7d0c5, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7081840892515873890, guid: 41d89b59fe3e9964a83686ff24b7d0c5, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeValuesOnHand
-      objectReference: {fileID: 0}
-    - target: {fileID: 7081840892515873890, guid: 41d89b59fe3e9964a83686ff24b7d0c5, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: CurrencyManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7081840892515873890, guid: 41d89b59fe3e9964a83686ff24b7d0c5, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 7081840892729805100, guid: 41d89b59fe3e9964a83686ff24b7d0c5, type: 3}
       propertyPath: m_text
       value: Blood
@@ -30216,7 +30188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3379950857302450588, guid: af38895a73642d543a3a23fa5bdd0c94, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.128
+      value: 9.177
       objectReference: {fileID: 0}
     - target: {fileID: 3379950857302450588, guid: af38895a73642d543a3a23fa5bdd0c94, type: 3}
       propertyPath: m_LocalPosition.y
@@ -30224,7 +30196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3379950857302450588, guid: af38895a73642d543a3a23fa5bdd0c94, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.233
+      value: -6.285
       objectReference: {fileID: 0}
     - target: {fileID: 3379950857302450588, guid: af38895a73642d543a3a23fa5bdd0c94, type: 3}
       propertyPath: m_LocalRotation.w
@@ -30253,14 +30225,6 @@ PrefabInstance:
     - target: {fileID: 3379950857302450588, guid: af38895a73642d543a3a23fa5bdd0c94, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7812061119468816289, guid: af38895a73642d543a3a23fa5bdd0c94, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.11
-      objectReference: {fileID: 0}
-    - target: {fileID: 7812061119468816289, guid: af38895a73642d543a3a23fa5bdd0c94, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 8649114366999264230, guid: af38895a73642d543a3a23fa5bdd0c94, type: 3}
       propertyPath: m_Controller
