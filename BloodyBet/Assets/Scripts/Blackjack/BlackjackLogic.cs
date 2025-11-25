@@ -50,18 +50,18 @@ public class BlackjackLogic : MonoBehaviour
 
     public void GenerateDeck()
     {
-        var suits = Enum.GetValues(typeof(Suit));
+        //var suits = Enum.GetValues(typeof(Suit));
         var ranks = Enum.GetValues(typeof(Rank));
 
-        foreach (var suit in suits)
-        {
+        //foreach (var suit in suits)
+        //{
             foreach (var rank in ranks)
             {
-                Card newCard = new Card((Suit)suit, (Rank)rank);
+                Card newCard = new Card((Rank)rank);
 
                 deck.Add(newCard);
             }
-        }
+       // }
     }
 
     public void ShuffleDeck()
