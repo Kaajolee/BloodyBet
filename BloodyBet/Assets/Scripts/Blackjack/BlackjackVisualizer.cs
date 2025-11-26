@@ -120,7 +120,7 @@ public class BlackjackVisualizer : MonoBehaviour
         Debug.Log("Stage: Player Turn");
         outputText.text = "Stage: Player Turn";
 
-        gameUi.SetActive(true);
+        //gameUi.SetActive(true);
 
         hitButton.interactable = true;
         standButton.interactable = true;

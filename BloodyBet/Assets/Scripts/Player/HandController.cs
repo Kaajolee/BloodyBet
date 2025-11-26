@@ -37,6 +37,10 @@ public class HandController : MonoBehaviour
         AnimateHand();
     }
 
+    public float GetIndexValue => indexValue;
+    public float GetThumbValue => thumbValue;
+    public float GetThreeFingersValue => threeFingersValue;
+
     InputDevice GetInputDevice()
     {
         InputDeviceCharacteristics controllerCharacteristics = InputDeviceCharacteristics.HeldInHand | InputDeviceCharacteristics.Controller;

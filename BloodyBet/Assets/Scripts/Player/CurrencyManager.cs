@@ -69,5 +69,6 @@ public class CurrencyManager : MonoBehaviour
         currentBet = (int)(slider.value * Balance);
         valueText.text = currentBet.ToString();
         typeText.text = Balance.ToString();
+        OnBalanceChanged?.Invoke(Balance);
     }
 }
