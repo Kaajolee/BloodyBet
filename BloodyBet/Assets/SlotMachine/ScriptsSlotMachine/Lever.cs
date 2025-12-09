@@ -10,7 +10,7 @@ public class Lever : MonoBehaviour {
 
     [SerializeField] private SlotMachine slotMachine;
 
-    [SerializeField] private float leverOutput = 100;
+    [SerializeField] private float leverOutput = 90;
     [SerializeField] private float minValue;
     [SerializeField] private float maxValue;
     [SerializeField] private float startingValue;
@@ -38,7 +38,7 @@ public class Lever : MonoBehaviour {
             float rangeFraction = (startingValue - minValue) / (maxValue - minValue);
             float degreeRotation = hinge.limits.min + (hinge.limits.max - hinge.limits.min) * rangeFraction;
             Vector3 worldSpaceHingeAxis = transform.TransformDirection(hinge.axis);
-            transform.rotation = Quaternion.AngleAxis(degreeRotation, worldSpaceHingeAxis);
+            transform.rotation = Quaternion.AngleAxis(degreeRotation, worldSpaceHingeAxis) * transform.rotation;
         }
     }
 
@@ -46,7 +46,6 @@ public class Lever : MonoBehaviour {
         if (leverOutput <= 10) {
             if (slotMachine != null) {
                 slotMachine.StartSpin();
-
                 StartCoroutine(ReturnLever());
             }
         }
