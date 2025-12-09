@@ -12,7 +12,6 @@ public class BloodBankVisualizer : MonoBehaviour
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI timeText;
 
-    public Collider depositSlotCollider;
     private HandController handInside = null;
 
     public float holdTimeToDeposit = 1.5f;
