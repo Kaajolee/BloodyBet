@@ -27,8 +27,16 @@ public class BlackjackVisualizer : MonoBehaviour
     [SerializeField] private GameObject startUi;
     [SerializeField] private GameObject gameUi;
 
+    [SerializeField] private BoxCollider betConfirmColldier;
+
+    private HandController handInside = null;
+
+    public float holdTimeToDeposit = 1.5f;
+    private float holdTimer = 0f;
+
     private BlackjackStage currentStage = BlackjackStage.Betting;
     private bool playerInputReceived = false;
+    private bool playerPlacedBet = false;
 
     void OnEnable()
     {
@@ -54,6 +62,11 @@ public class BlackjackVisualizer : MonoBehaviour
         currencyManager = playerManager.GetComponent<CurrencyManager>();
 
         gameUi.SetActive(false);
+    }
+
+    void Update()
+    {
+            
     }
 
     private void StartGame()
@@ -84,8 +97,37 @@ public class BlackjackVisualizer : MonoBehaviour
         currentStage = BlackjackStage.Betting;
         Debug.Log("Stage: Betting");
         outputText.text = "Stage: Betting";
+        playerPlacedBet = false;
+        //currentBet = currencyManager.currentBet;
 
-        currentBet = currencyManager.currentBet;
+        while (playerPlacedBet == false)
+        {
+            if (handInside != null)
+            {
+                // detect fist (adjust based on your VR hand values)
+                bool fistClosed = handInside.GetIndexValue > 0.85f &&
+                                 handInside.GetThumbValue > 0.85f &&
+                                 handInside.GetThreeFingersValue > 0.85f;
+
+
+                if (fistClosed)
+                {
+                    holdTimer += Time.deltaTime;
+
+                    if (holdTimer >= holdTimeToDeposit)
+                    {
+                        currentBet = currencyManager.currentBet;
+                        playerPlacedBet = true;
+                        holdTimer = 0f;
+                    }
+                }
+                else
+                {
+                    holdTimer = 0f;
+                }
+            }
+            yield return null;
+        }
 
         yield return new WaitForSeconds(2f);
     }
@@ -281,6 +323,27 @@ public class BlackjackVisualizer : MonoBehaviour
     public BlackjackStage GetCurrentStage()
     {
         return currentStage;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.ToString());
+        HandController hand = other.GetComponentInParent<HandController>();
+        if (hand != null)
+        {
+            handInside = hand;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log(other.ToString());
+        HandController hand = other.GetComponentInParent<HandController>();
+        if (hand != null && handInside == hand)
+        {
+            handInside = null;
+            holdTimer = 0;
+        }
     }
 }
 
