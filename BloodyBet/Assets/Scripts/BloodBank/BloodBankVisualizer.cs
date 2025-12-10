@@ -27,8 +27,11 @@ public class BloodBankVisualizer : MonoBehaviour
 
         logic.OnGoalReached += () =>
         {
-            logic.DoubleGoal();
-            logic.StartRound();
+            //logic.DepositBlood(logic.bloodNeededThisRound);
+            //logic.DoubleGoal();
+            //logic.StartRound();
+            currencyManager.AddMoney(logic.bloodNeededThisRound / 3);
+            UpdateUI();
             ResetTimer();
         };
 

@@ -156,6 +156,9 @@ MonoBehaviour:
   OnBalanceChanged:
     m_PersistentCalls:
       m_Calls: []
+  OnBalanceZero:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &3336339
 Transform:
   m_ObjectHideFlags: 0
@@ -410,6 +413,8 @@ MonoBehaviour:
   bloodNeededThisRound: 5000
   bloodDeposited: 0
   roundTimeSeconds: 240
+  currentRoundState: 0
+  currencyManager: {fileID: 3336338}
 --- !u!65 &13844994
 BoxCollider:
   m_ObjectHideFlags: 0
