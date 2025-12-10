@@ -127,7 +127,7 @@ public class BloodBankVisualizer : MonoBehaviour
         if (hand != null)
         {
             handInside = hand;
-            bankSpikes.ScaleSpikes(true);
+            StartCoroutine(bankSpikes.ScaleSpikes(true));
             statusText.text = "Hold fist to deposit...";
         }
     }
@@ -139,7 +139,7 @@ public class BloodBankVisualizer : MonoBehaviour
         if (hand != null && handInside == hand)
         {
             handInside = null;
-            bankSpikes.ScaleSpikes(false);
+            StartCoroutine(bankSpikes.ScaleSpikes(false));
             statusText.text = "";
             holdTimer = 0;
         }
