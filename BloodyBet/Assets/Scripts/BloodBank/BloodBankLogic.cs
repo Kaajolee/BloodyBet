@@ -16,6 +16,8 @@ public class BloodBankLogic : MonoBehaviour
     public RoundState currentRoundState = RoundState.Active;
 
     public CurrencyManager currencyManager;
+    public VaseFiller VaseFiller;
+
 
     // EVENTS (Visualizer will subscribe)
     public System.Action<int, int> OnBloodChanged;   // current, needed
@@ -69,6 +71,10 @@ public class BloodBankLogic : MonoBehaviour
         bloodDeposited += accepted;
 
         OnBloodChanged?.Invoke(bloodDeposited, bloodNeededThisRound);
+
+        float coef = bloodDeposited / bloodNeededThisRound;
+
+        VaseFiller.SetFillAmount(coef);
 
         if (bloodDeposited >= bloodNeededThisRound)
         {
