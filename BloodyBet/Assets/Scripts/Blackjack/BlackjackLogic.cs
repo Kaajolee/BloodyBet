@@ -95,25 +95,40 @@ public class BlackjackLogic : MonoBehaviour
     public int EvaluateHand(BlackjackHand hand)
     {
         int sum = 0;
+        int aceCount = 0;
 
+        // 1. Sum up all non-Ace cards and count the Aces
         foreach (Card card in hand.GetCards())
         {
-            int value = (int)Enum.Parse(typeof(Rank), card.Rank.ToString());
+            // Get the numeric value (assuming Rank 2-10, J/Q/K=10, Ace=1)
+            int cardValue = (int)Enum.Parse(typeof(Rank), card.Rank.ToString());
 
-            if (value > 10)
+            if (cardValue >= 10) // J, Q, K
             {
                 sum += 10;
             }
-            else if (value <= 10 && value != 1)
+            else if (cardValue > 1) // 2 through 10 (or equivalent enum value)
             {
-                sum += value;
+                sum += cardValue;
             }
-            else if (value == 1) //ace
+            else if (cardValue == 1) // Ace
             {
-                if (sum + value > 21)
-                    sum += value;
-                else
-                    sum += 11;
+                aceCount++;
+            }
+        }
+
+        // 2. Add Aces, prioritizing the 11 value
+        for (int i = 0; i < aceCount; i++)
+        {
+            // Try to count the Ace as 11 first (soft hand)
+            if (sum + 11 <= 21)
+            {
+                sum += 11;
+            }
+            else
+            {
+                // If 11 would bust the hand, count it as 1 instead (hard hand)
+                sum += 1;
             }
         }
 
