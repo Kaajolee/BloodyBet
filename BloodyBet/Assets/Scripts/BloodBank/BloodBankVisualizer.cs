@@ -88,6 +88,8 @@ public class BloodBankVisualizer : MonoBehaviour
     {
 
         int selectedBlood = currencyManager.currentBet; // YOU implement this
+        int maxBloodNeeded = logic.bloodNeededThisRound;
+
 
         int accepted = logic.DepositBlood(selectedBlood);
 
