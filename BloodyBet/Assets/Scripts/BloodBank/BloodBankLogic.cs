@@ -19,6 +19,8 @@ public class BloodBankLogic : MonoBehaviour
     public VaseFiller VaseFiller;
 
 
+    public VaseFiller VaseFiller;
+
     // EVENTS (Visualizer will subscribe)
     public System.Action<int, int> OnBloodChanged;   // current, needed
     public System.Action<float> OnTimerChanged;      // remaining time
