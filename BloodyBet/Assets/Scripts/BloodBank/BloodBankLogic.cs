@@ -70,6 +70,15 @@ public class BloodBankLogic : MonoBehaviour
 
         OnBloodChanged?.Invoke(bloodDeposited, bloodNeededThisRound);
 
+<<<<<<< Updated upstream
+=======
+        float coef = (float)bloodDeposited / (float)bloodNeededThisRound;
+
+        //Debug.Log($"cokeceofj:{coef}   bloodjhgoishds:{bloodDeposited},  needed tihs rmeoub:{bloodNeededThisRound}");
+
+        VaseFiller.SetFillAmount(coef);
+
+>>>>>>> Stashed changes
         if (bloodDeposited >= bloodNeededThisRound)
         {
             //OnGoalReached?.Invoke();
