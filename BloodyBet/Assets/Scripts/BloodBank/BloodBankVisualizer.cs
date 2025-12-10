@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -74,8 +75,8 @@ public class BloodBankVisualizer : MonoBehaviour
     private void HandleTimer()
     {
         timer -= Time.deltaTime;
-        timeText.text = "Time: " + timer.ToString("F1");
-
+        //timeText.text = "Time: " + timer.ToString("F1");
+        timeText.text = "Time: " + TimeSpan.FromSeconds(timer).ToString(@"mm\:ss");
         if (timer <= 0f)
         {
             logic.OnRoundFailed?.Invoke();
