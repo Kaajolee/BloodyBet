@@ -92,5 +92,7 @@ public class VaseFiller : MonoBehaviour
         lerpDuration = Mathf.Max(0.00009f, animationLerpDuration);
         lerpTimer = 0f;
         lerping = true;
+
+        Debug.Log("filled: " + target);
     }
 }

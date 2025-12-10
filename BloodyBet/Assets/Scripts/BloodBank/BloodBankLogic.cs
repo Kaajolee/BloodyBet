@@ -72,7 +72,9 @@ public class BloodBankLogic : MonoBehaviour
 
         OnBloodChanged?.Invoke(bloodDeposited, bloodNeededThisRound);
 
-        float coef = bloodDeposited / bloodNeededThisRound;
+        float coef = (float)bloodDeposited / (float)bloodNeededThisRound;
+
+        //Debug.Log($"cokeceofj:{coef}   bloodjhgoishds:{bloodDeposited},  needed tihs rmeoub:{bloodNeededThisRound}");
 
         VaseFiller.SetFillAmount(coef);
 

@@ -121,7 +121,7 @@ public class BloodBankVisualizer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.ToString());
+       // Debug.Log(other.ToString());
         HandController hand = other.GetComponentInParent<HandController>();
         if (hand != null)
         {
@@ -132,7 +132,7 @@ public class BloodBankVisualizer : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(other.ToString());
+        //Debug.Log(other.ToString());
         HandController hand = other.GetComponentInParent<HandController>();
         if (hand != null && handInside == hand)
         {
