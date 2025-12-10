@@ -6,7 +6,7 @@ public class BloodBankVisualizer : MonoBehaviour
     public CurrencyManager currencyManager;
 
     public BloodBankLogic logic;
-
+    public BooldBankSpikes bankSpikes;
     public TextMeshProUGUI depositedText;
     public TextMeshProUGUI neededText;
     public TextMeshProUGUI statusText;
@@ -61,6 +61,7 @@ public class BloodBankVisualizer : MonoBehaviour
                 {
                     PerformDeposit();
                     holdTimer = 0f;
+                    
                 }
             }
             else
@@ -126,6 +127,7 @@ public class BloodBankVisualizer : MonoBehaviour
         if (hand != null)
         {
             handInside = hand;
+            bankSpikes.ScaleSpikes(true);
             statusText.text = "Hold fist to deposit...";
         }
     }
@@ -137,6 +139,7 @@ public class BloodBankVisualizer : MonoBehaviour
         if (hand != null && handInside == hand)
         {
             handInside = null;
+            bankSpikes.ScaleSpikes(false);
             statusText.text = "";
             holdTimer = 0;
         }
