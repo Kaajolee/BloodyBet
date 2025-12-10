@@ -17,6 +17,8 @@ public class BloodBankLogic : MonoBehaviour
 
     public CurrencyManager currencyManager;
 
+    public VaseFiller VaseFiller;
+
     // EVENTS (Visualizer will subscribe)
     public System.Action<int, int> OnBloodChanged;   // current, needed
     public System.Action<float> OnTimerChanged;      // remaining time
@@ -70,15 +72,12 @@ public class BloodBankLogic : MonoBehaviour
 
         OnBloodChanged?.Invoke(bloodDeposited, bloodNeededThisRound);
 
-<<<<<<< Updated upstream
-=======
         float coef = (float)bloodDeposited / (float)bloodNeededThisRound;
 
         //Debug.Log($"cokeceofj:{coef}   bloodjhgoishds:{bloodDeposited},  needed tihs rmeoub:{bloodNeededThisRound}");
 
         VaseFiller.SetFillAmount(coef);
 
->>>>>>> Stashed changes
         if (bloodDeposited >= bloodNeededThisRound)
         {
             //OnGoalReached?.Invoke();
