@@ -14,6 +14,8 @@ public class SlotMachine : MonoBehaviour {
     public float spinTime = 2f;
     public float delayBetweenReels = 0.5f;
 
+    public CurrencyManager currencyManager;
+
     private bool isSpinning = false;
 
     void Awake() {
@@ -21,7 +23,7 @@ public class SlotMachine : MonoBehaviour {
 
         // Prieš pirmą spin, rodomas tekstas
         if (resultText != null)
-            resultText.text = "Suk ir laimėk";
+            resultText.text = "Spin and Win";
     }
 
     public Sprite GetRandomSymbol() {
@@ -77,9 +79,11 @@ public class SlotMachine : MonoBehaviour {
         if (s0 == s1 && s0 == s2) {
             if (resultText != null) resultText.text = "JACKPOT!";
             Debug.Log("🎉 JACKPOT!");
+            currencyManager.AddMoney(currencyManager.currentBet * 7);
         } else {
             if (resultText != null) resultText.text = "LOSER!";
             Debug.Log("No match");
+            currencyManager.RemoveMoney(currencyManager.currentBet);
         }
     }
 }
