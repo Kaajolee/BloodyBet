@@ -53,6 +53,7 @@ public class BooldBankSpikes : MonoBehaviour
             for (int i = 0; i < spikes.Length; i++)
             {
                 spikes[i].localScale = Vector3.Lerp(startScales[i], endScales[i], t);
+                Debug.Log("spike skalesd: " + spikes[i].name);
             }
 
             yield return null;
