@@ -84,4 +84,8 @@ public class DiceRoller : MonoBehaviour {
     public int GetCurrentValue() {
         return currentValue;
     }
+
+    public void ResetValue() {
+        currentValue = 0;
+    }
 }
