@@ -29,6 +29,7 @@ public class CurrencyManager : MonoBehaviour
     public int Balance { get; private set; }
 
     public UnityEvent<int> OnBalanceChanged;
+    public UnityEvent OnBalanceZero;
 
     void Start()
     {
@@ -55,6 +56,7 @@ public class CurrencyManager : MonoBehaviour
         if (Balance < amount)
         {
             Balance = 0;
+            OnBalanceZero?.Invoke();
             return;
         }
 

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ public class BloodBankVisualizer : MonoBehaviour
     public CurrencyManager currencyManager;
 
     public BloodBankLogic logic;
-
+    public BooldBankSpikes bankSpikes;
     public TextMeshProUGUI depositedText;
     public TextMeshProUGUI neededText;
     public TextMeshProUGUI statusText;
@@ -27,8 +28,11 @@ public class BloodBankVisualizer : MonoBehaviour
 
         logic.OnGoalReached += () =>
         {
-            logic.DoubleGoal();
-            logic.StartRound();
+            //logic.DepositBlood(logic.bloodNeededThisRound);
+            //logic.DoubleGoal();
+            //logic.StartRound();
+            currencyManager.AddMoney(logic.bloodNeededThisRound / 3);
+            UpdateUI();
             ResetTimer();
         };
 
@@ -58,6 +62,7 @@ public class BloodBankVisualizer : MonoBehaviour
                 {
                     PerformDeposit();
                     holdTimer = 0f;
+                    
                 }
             }
             else
@@ -70,8 +75,8 @@ public class BloodBankVisualizer : MonoBehaviour
     private void HandleTimer()
     {
         timer -= Time.deltaTime;
-        timeText.text = "Time: " + timer.ToString("F1");
-
+        //timeText.text = "Time: " + timer.ToString("F1");
+        timeText.text = "Time: " + TimeSpan.FromSeconds(timer).ToString(@"mm\:ss");
         if (timer <= 0f)
         {
             logic.OnRoundFailed?.Invoke();
@@ -88,6 +93,7 @@ public class BloodBankVisualizer : MonoBehaviour
     {
 
         int selectedBlood = currencyManager.currentBet; // YOU implement this
+
 
         int accepted = logic.DepositBlood(selectedBlood);
 
@@ -117,22 +123,24 @@ public class BloodBankVisualizer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.ToString());
+       // Debug.Log(other.ToString());
         HandController hand = other.GetComponentInParent<HandController>();
         if (hand != null)
         {
             handInside = hand;
+            StartCoroutine(bankSpikes.ScaleSpikes(true));
             statusText.text = "Hold fist to deposit...";
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(other.ToString());
+        //Debug.Log(other.ToString());
         HandController hand = other.GetComponentInParent<HandController>();
         if (hand != null && handInside == hand)
         {
             handInside = null;
+            StartCoroutine(bankSpikes.ScaleSpikes(false));
             statusText.text = "";
             holdTimer = 0;
         }

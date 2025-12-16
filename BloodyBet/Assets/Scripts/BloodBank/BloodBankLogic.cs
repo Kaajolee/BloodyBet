@@ -13,6 +13,11 @@ public class BloodBankLogic : MonoBehaviour
 
     public bool IsRoundActive { get; private set; }
 
+    public RoundState currentRoundState = RoundState.Active;
+
+    public CurrencyManager currencyManager;
+    public VaseFiller VaseFiller;
+
     // EVENTS (Visualizer will subscribe)
     public System.Action<int, int> OnBloodChanged;   // current, needed
     public System.Action<float> OnTimerChanged;      // remaining time
@@ -21,22 +26,35 @@ public class BloodBankLogic : MonoBehaviour
 
     private void Start()
     {
+        currencyManager.OnBalanceZero.AddListener(() => GoalFailed());
         StartRound();
     }
 
     private void Update()
     {
-        if (!IsRoundActive)
-            return;
 
-        timer -= Time.deltaTime;
-        OnTimerChanged?.Invoke(timer);
+        switch (currentRoundState)
+        { 
+            case RoundState.Active:
+                timer -= Time.deltaTime;
+                OnTimerChanged?.Invoke(timer);
 
-        if (timer <= 0f)
-        {
-            // TIME OUT ? FAIL
-            IsRoundActive = false;
-            OnRoundFailed?.Invoke();
+                if (timer <= 0f)
+                {
+                    currentRoundState = RoundState.Failed;
+                }
+                break;
+
+            case RoundState.Reached:
+                DoubleGoal();
+                StartRound();
+                OnGoalReached?.Invoke();
+                currentRoundState = RoundState.Active;
+                break;
+
+            case RoundState.Failed:
+                RestartScene();
+                break;
         }
     }
 
@@ -45,7 +63,7 @@ public class BloodBankLogic : MonoBehaviour
     // ------------------------------------------------------------
     public int DepositBlood(int amount)
     {
-        if (!IsRoundActive) return 0;
+        if (currentRoundState != RoundState.Active) return 0;
 
         int accepted = Mathf.Min(amount, bloodNeededThisRound - bloodDeposited);
 
@@ -53,10 +71,16 @@ public class BloodBankLogic : MonoBehaviour
 
         OnBloodChanged?.Invoke(bloodDeposited, bloodNeededThisRound);
 
+        float coef = (float)bloodDeposited / (float)bloodNeededThisRound;
+
+        //Debug.Log($"cokeceofj:{coef}   bloodjhgoishds:{bloodDeposited},  needed tihs rmeoub:{bloodNeededThisRound}");
+
+        VaseFiller.SetFillAmount(coef);
+
         if (bloodDeposited >= bloodNeededThisRound)
         {
-            IsRoundActive = false;
-            OnGoalReached?.Invoke();
+            //OnGoalReached?.Invoke();
+            currentRoundState = RoundState.Reached;
         }
 
         return accepted;
@@ -67,6 +91,11 @@ public class BloodBankLogic : MonoBehaviour
         return bloodDeposited >= bloodNeededThisRound;
     }
 
+    public void GoalFailed()
+    {
+        currentRoundState = RoundState.Failed;
+    }
+
     // ------------------------------------------------------------
     // ROUND MANAGEMENT
     // ------------------------------------------------------------
@@ -74,7 +103,8 @@ public class BloodBankLogic : MonoBehaviour
     {
         bloodDeposited = 0;
         timer = roundTimeSeconds;
-        IsRoundActive = true;
+        //IsRoundActive = true;
+        currentRoundState = RoundState.Active;
 
         OnBloodChanged?.Invoke(bloodDeposited, bloodNeededThisRound);
         OnTimerChanged?.Invoke(timer);
@@ -88,11 +118,18 @@ public class BloodBankLogic : MonoBehaviour
 
     public void DoubleGoal()
     {
-        bloodNeededThisRound *= 2;
+        bloodNeededThisRound *= 3;
     }
 
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+}
+
+public enum RoundState
+{
+    Active,
+    Reached,
+    Failed,
 }
