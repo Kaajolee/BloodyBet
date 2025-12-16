@@ -53,7 +53,7 @@ public class BloodBankLogic : MonoBehaviour
                 break;
 
             case RoundState.Failed:
-                RestartScene();
+                //RestartScene();
                 break;
         }
     }

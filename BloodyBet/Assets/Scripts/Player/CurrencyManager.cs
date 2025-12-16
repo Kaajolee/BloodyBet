@@ -53,10 +53,11 @@ public class CurrencyManager : MonoBehaviour
 
     public void RemoveMoney(int amount)
     {
-        if (Balance < amount)
+        if (Balance <= amount)
         {
             Balance = 0;
             OnBalanceZero?.Invoke();
+            Debug.Log("PRALAIMEJO TURI RODYT KAD PRALAIMEJO");
             return;
         }
 

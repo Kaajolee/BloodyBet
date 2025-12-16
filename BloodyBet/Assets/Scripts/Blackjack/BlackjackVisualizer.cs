@@ -31,6 +31,8 @@ public class BlackjackVisualizer : MonoBehaviour
 
     private HandController handInside = null;
 
+    public BooldBankSpikes bankSpikes;
+
     public float holdTimeToDeposit = 1.5f;
     private float holdTimer = 0f;
 
@@ -333,6 +335,7 @@ public class BlackjackVisualizer : MonoBehaviour
         if (hand != null)
         {
             handInside = hand;
+            StartCoroutine(bankSpikes.ScaleSpikes(true));
         }
     }
 
@@ -344,6 +347,7 @@ public class BlackjackVisualizer : MonoBehaviour
         {
             handInside = null;
             holdTimer = 0;
+            StartCoroutine(bankSpikes.ScaleSpikes(false));
         }
     }
 }

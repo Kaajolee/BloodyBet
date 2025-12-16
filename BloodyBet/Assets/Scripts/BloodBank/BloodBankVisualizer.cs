@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BloodBankVisualizer : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class BloodBankVisualizer : MonoBehaviour
     public TextMeshProUGUI neededText;
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI timeText;
+    public GameObject gameOverUi;
+    public Button gameOverButton;
 
     private HandController handInside = null;
 
@@ -23,6 +26,7 @@ public class BloodBankVisualizer : MonoBehaviour
 
     private void Start()
     {
+        gameOverUi.SetActive(false);
         timer = roundTime;
         UpdateUI();
 
@@ -38,13 +42,17 @@ public class BloodBankVisualizer : MonoBehaviour
 
         logic.OnRoundFailed += () =>
         {
-            logic.RestartScene();
+            GameOver();
         };
+
+        gameOverButton.onClick.AddListener(() => logic.RestartScene());
+        currencyManager.OnBalanceZero.AddListener(() => GameOver());
     }
 
     private void Update()
     {
-        HandleTimer();
+        if (logic.currentRoundState != RoundState.Failed)
+            HandleTimer();
 
         if (handInside != null)
         {
@@ -119,6 +127,12 @@ public class BloodBankVisualizer : MonoBehaviour
     {
         depositedText.text = "Deposited: " + logic.bloodDeposited;
         neededText.text = "Needed: " + logic.bloodNeededThisRound;
+    }
+
+    public void GameOver()
+    {
+        gameOverUi.SetActive(true);
+        timeText.text = "Game Over";
     }
 
     private void OnTriggerEnter(Collider other)
