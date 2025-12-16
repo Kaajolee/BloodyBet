@@ -54,7 +54,7 @@ public class BlackjackVisualizer : MonoBehaviour
     {
         hitButton.onClick.AddListener(HitPlayer);
         standButton.onClick.AddListener(StandPlayer);
-        startButton.onClick.AddListener(StartGame);
+        //startButton.onClick.AddListener(StartGame);
 
         hitButton.interactable = false;
         standButton.interactable = false;
@@ -62,6 +62,7 @@ public class BlackjackVisualizer : MonoBehaviour
         currencyManager = playerManager.GetComponent<CurrencyManager>();
 
         gameUi.SetActive(false);
+        StartGame();
     }
 
     void Update()
