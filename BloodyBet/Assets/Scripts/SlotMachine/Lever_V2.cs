@@ -25,9 +25,8 @@ public class Lever_V2 : MonoBehaviour
     private IXRSelectInteractor currentInteractor;
     private Vector3 grabStartLocalDir;
 
-    // Lock the lever object's transform (so it never moves)
+    // Lock position so it never translates
     private Vector3 lockedWorldPos;
-    private Quaternion lockedWorldRot;
 
     void Awake()
     {
@@ -36,15 +35,19 @@ public class Lever_V2 : MonoBehaviour
         // Lever pivot rotation baseline
         initialLeverRotation = leverPivot.localRotation;
 
-        // Lock this object's transform so it cannot be carried away
+        // Lock this object's position so it cannot be carried away
         lockedWorldPos = transform.position;
-        lockedWorldRot = transform.rotation;
 
-        // Ensure Rigidbody never moves
+        // Ensure Rigidbody never translates
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
         rb.useGravity = false;
-        rb.constraints = RigidbodyConstraints.FreezeAll;
+
+        // Freeze ONLY position (allow rotation!)
+        rb.constraints =
+            RigidbodyConstraints.FreezePositionX |
+            RigidbodyConstraints.FreezePositionY |
+            RigidbodyConstraints.FreezePositionZ;
 
         // Make grab "input-only": do not move/rotate the grabbed object transform
         grabInteractable.trackPosition = false;
@@ -66,8 +69,9 @@ public class Lever_V2 : MonoBehaviour
 
     void LateUpdate()
     {
-        // Safety net: even if something tries to move it, snap it back
-        transform.SetPositionAndRotation(lockedWorldPos, lockedWorldRot);
+        // Safety net: keep anchored so you can't "take it with you"
+        // DO NOT lock rotation here (single-object lever must rotate)
+        transform.position = lockedWorldPos;
     }
 
     void Update()
@@ -80,6 +84,7 @@ public class Lever_V2 : MonoBehaviour
         if (grabbed)
         {
             ApplyVRPull();
+            Debug.Log("Lever pulled by VR");
         }
         else if (keyboardPull)
         {
@@ -88,6 +93,7 @@ public class Lever_V2 : MonoBehaviour
                 initialLeverRotation * Quaternion.Euler(0f, -maxLowerAngle, 0f),
                 keyboardSpeed * Time.deltaTime
             );
+            Debug.Log("Lever pulled by keyboard");
         }
         else
         {
@@ -99,7 +105,7 @@ public class Lever_V2 : MonoBehaviour
         }
 
         float pulledAngle = Quaternion.Angle(initialLeverRotation, leverPivot.localRotation);
-        if (pulledAngle >= maxLowerAngle)
+        if (!isActivated && pulledAngle >= maxLowerAngle)
         {
             isActivated = true;
             OnLeverPulled();
