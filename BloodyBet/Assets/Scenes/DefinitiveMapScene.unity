@@ -15847,130 +15847,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3919984235829420545, guid: da122f1209a0e4c44969668b4c884108, type: 3}
   m_PrefabInstance: {fileID: 961953895}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &962736966
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1339627232284171947, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_ConnectedBody
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2250915045461203951, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_Name
-      value: SlotMachine
-      objectReference: {fileID: 0}
-    - target: {fileID: 2250915045461203951, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.83
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.83
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.83
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 10.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 11.49391
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.76
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.25980622
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.96566087
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -149.883
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5531301201797459306, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8056808042758603189, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_TrackScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8056808042758603189, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_TrackPosition
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8056808042758603189, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_TrackRotation
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8056808042758603189, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_SmoothPosition
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8056808042758603189, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_InteractionManager
-      value: 
-      objectReference: {fileID: 92981601}
-    - target: {fileID: 8596071334946053936, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8596071334946053936, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: currencyManager
-      value: 
-      objectReference: {fileID: 3336338}
-    - target: {fileID: 8854836411072952442, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-      propertyPath: startingValue
-      value: 90
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
---- !u!114 &962736967 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8873616886729322439, guid: d9514e1424c6c154e8220c6c8d8061c2, type: 3}
-  m_PrefabInstance: {fileID: 962736966}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshPro
 --- !u!1 &980979477
 GameObject:
   m_ObjectHideFlags: 0
@@ -36475,7 +36351,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450652172197787}
-  - component: {fileID: 919132148435109154}
   - component: {fileID: 919132148435109155}
   m_Layer: 0
   m_Name: SlotMachine_V2
@@ -36484,30 +36359,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &919132148435109154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148435109153}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f028d01447231e44b94b4481ca70262, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SlotMachine
-  reels:
-  - {fileID: 8852452054304910029}
-  - {fileID: 9181558230904764909}
-  - {fileID: 5602890860635624294}
-  symbols:
-  - {fileID: 21300002, guid: 215687feeab0b7445b4a1cd86c82c2e1, type: 3}
-  - {fileID: -5159087384432534610, guid: 215687feeab0b7445b4a1cd86c82c2e1, type: 3}
-  - {fileID: -7343220986905845580, guid: 215687feeab0b7445b4a1cd86c82c2e1, type: 3}
-  resultText: {fileID: 962736967}
-  spinTime: 3
-  delayBetweenReels: 0.5
-  currencyManager: {fileID: 3336338}
 --- !u!114 &919132148435109155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40371,7 +40222,6 @@ SceneRoots:
   - {fileID: 82734906}
   - {fileID: 1244063706}
   - {fileID: 162102421}
-  - {fileID: 962736966}
   - {fileID: 13844991}
   - {fileID: 543450652475494157}
   - {fileID: 482179128}
