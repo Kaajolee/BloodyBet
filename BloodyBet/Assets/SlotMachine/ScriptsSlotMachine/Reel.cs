@@ -40,7 +40,7 @@ public class Reel : MonoBehaviour {
     IEnumerator SpinAnimation() {
         spinning = true;
         while (spinning) {
-            sr.sprite = SlotMachine.Instance.GetRandomSymbol();
+            sr.sprite = SlotMachine_V2.Instance.GetRandomSymbol();
             yield return new WaitForSeconds(0.05f); // speed of sprite change
         }
     }
